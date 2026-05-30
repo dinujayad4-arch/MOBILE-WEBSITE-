@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel — NextGen Mobiles</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+<div class="admin-toasts" id="admin-toasts"></div>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-orb login-orb-1"></div>
+  <div class="login-orb login-orb-2"></div>
+  <div class="login-card">
+    <div class="login-logo">⚡ NextGen</div>
+    <div class="login-subtitle">Admin Panel — Secure Access</div>
+    <div class="login-error" id="login-error"></div>
+    <form id="login-form">
+      <div class="form-group">
+        <label class="form-label">Username</label>
+        <input type="text" class="form-input" value="admin" readonly style="cursor:not-allowed;opacity:0.6" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="password-wrap">
+          <input type="password" class="form-input" id="login-pass" placeholder="Enter admin password" required />
+          <button type="button" class="pw-eye" id="pw-eye-btn"><i class="fas fa-eye"></i></button>
+        </div>
+      </div>
+      <button type="submit" class="login-btn"><i class="fas fa-shield-alt"></i> &nbsp;Login to Admin Panel</button>
+    </form>
+    <div class="login-hint">Default password: <strong>admin123</strong> &nbsp;·&nbsp; Change it in Settings</div>
+  </div>
+</div>
+
+<!-- ADMIN APP -->
+<div id="admin-app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-text">⚡ NextGen</div>
+      <div class="sidebar-logo-sub">Admin Dashboard</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-title">Main</div>
+      <div class="nav-item" data-page="dashboard"><div class="nav-icon"><i class="fas fa-chart-line"></i></div>Dashboard</div>
+      <div class="nav-item" data-page="products"><div class="nav-icon"><i class="fas fa-mobile-alt"></i></div>Products</div>
+      <div class="nav-item" data-page="categories"><div class="nav-icon"><i class="fas fa-tags"></i></div>Categories</div>
+      <div class="nav-item" data-page="flashsale"><div class="nav-icon"><i class="fas fa-bolt"></i></div>Flash Sale</div>
+      <div class="nav-section-title" style="margin-top:8px">Commerce</div>
+      <div class="nav-item" data-page="orders"><div class="nav-icon"><i class="fas fa-box"></i></div>Orders</div>
+      <div class="nav-item" data-page="users"><div class="nav-icon"><i class="fas fa-users"></i></div>Users</div>
+      <div class="nav-section-title" style="margin-top:8px">System</div>
+      <div class="nav-item" data-page="settings"><div class="nav-icon"><i class="fas fa-cog"></i></div>Settings</div>
+      <a class="nav-item" id="visit-site-btn" href="index.html" target="_blank">
+        <div class="nav-icon"><i class="fas fa-external-link-alt"></i></div>Visit Store
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="admin-user">
+        <div class="admin-avatar">👨‍💼</div>
+        <div><div class="admin-name">Administrator</div><div class="admin-role">Super Admin</div></div>
+      </div>
+      <button class="logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-content">
+    <div class="top-bar">
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="btn btn-secondary btn-icon" id="sidebar-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div>
+          <div class="page-title" id="page-title">Dashboard</div>
+          <div style="font-size:0.72rem;color:var(--text-3)" id="page-subtitle">Overview & analytics</div>
+        </div>
+      </div>
+      <div class="top-bar-actions">
+        <button class="btn btn-secondary" id="export-btn"><i class="fas fa-download"></i> Export CSV</button>
+        <button class="btn btn-primary" id="top-add-btn" style="display:none">+ Add Product</button>
+      </div>
+    </div>
+
+    <div class="page-content">
+
+      <!-- ===== DASHBOARD ===== -->
+      <div class="page active" id="page-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card stat-card-1">
+            <div class="stat-icon stat-icon-1"><i class="fas fa-mobile-alt" style="color:var(--neon)"></i></div>
+            <div class="stat-number" id="stat-products">0</div>
+            <div class="stat-label">Total Products</div>
+          </div>
+          <div class="stat-card stat-card-2">
+            <div class="stat-icon stat-icon-2"><i class="fas fa-users" style="color:var(--purple)"></i></div>
+            <div class="stat-number" id="stat-users">0</div>
+            <div class="stat-label">Registered Users</div>
+          </div>
+          <div class="stat-card stat-card-3">
+            <div class="stat-icon stat-icon-3"><i class="fas fa-box" style="color:var(--green)"></i></div>
+            <div class="stat-number" id="stat-orders">0</div>
+            <div class="stat-label">Total Orders</div>
+          </div>
+          <div class="stat-card stat-card-4">
+            <div class="stat-icon stat-icon-4"><i class="fas fa-rupee-sign" style="color:var(--yellow)"></i></div>
+            <div class="stat-number" id="stat-revenue">Rs. 0</div>
+            <div class="stat-label">Total Revenue</div>
+          </div>
+        </div>
+
+        <div class="chart-row">
+          <div class="chart-card">
+            <div class="chart-title">Monthly Sales <span style="font-size:0.72rem;color:var(--text-3);font-weight:500">2025</span></div>
+            <div class="mini-bars" id="sales-bars"></div>
+            <div class="bar-labels" id="bar-labels"></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-title">Top Products <span style="font-size:0.72rem;color:var(--text-3);font-weight:500">by Reviews</span></div>
+            <div id="top-products-list"></div>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-title">Recent Orders</div>
+            <button class="btn btn-secondary btn-sm" onclick="navigate('orders')">View All <i class="fas fa-arrow-right"></i></button>
+          </div>
+          <div style="overflow-x:auto">
+            <table>
+              <thead><tr><th>Order ID</th><th>Customer</th><th>Product(s)</th><th>Amount</th><th>Status</th></tr></thead>
+              <tbody id="recent-orders-tbody">
+                <tr><td colspan="5" style="text-align:center;color:var(--text-3);padding:20px">No orders yet</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== PRODUCTS ===== -->
+      <div class="page" id="page-products">
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-title">All Products</div>
+            <div class="table-search">
+              <i class="fas fa-search" style="color:var(--text-3);font-size:0.85rem"></i>
+              <input type="text" id="product-search" placeholder="Search products..." />
+            </div>
+          </div>
+          <div style="overflow-x:auto">
+            <table>
+              <thead><tr><th>Product</th><th>Price</th><th>Badge</th><th>Stock</th><th>Flash</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="products-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== CATEGORIES ===== -->
+      <div class="page" id="page-categories">
+        <div class="categories-grid" id="cats-grid"></div>
+      </div>
+
+      <!-- ===== FLASH SALE ===== -->
+      <div class="page" id="page-flashsale">
+        <div class="flash-admin-controls">
+          <span id="flash-active-badge" class="flash-status-badge flash-on">⚡ FLASH SALE ON</span>
+          <button class="btn btn-secondary" id="flash-toggle-btn">Turn OFF</button>
+          <span style="font-size:0.8rem;color:var(--text-3)">Toggle which products appear in the Flash Sale section.</span>
+        </div>
+        <div class="table-card">
+          <div class="table-header"><div class="table-title">⚡ Flash Sale Products</div></div>
+          <div style="overflow-x:auto">
+            <table>
+              <thead><tr><th>Product</th><th>Price</th><th>Discount</th><th>Include in Flash Sale</th></tr></thead>
+              <tbody id="flash-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== ORDERS (Real) ===== -->
+      <div class="page" id="page-orders">
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-title">Customer Orders <span class="nav-badge" id="orders-count">0</span></div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <div class="table-search">
+                <i class="fas fa-search" style="color:var(--text-3);font-size:0.85rem"></i>
+                <input type="text" id="order-search" placeholder="Search orders..." />
+              </div>
+              <select id="order-status-filter" style="background:var(--bg-secondary);color:var(--text-1);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:0.82rem;cursor:pointer">
+                <option value="all">All Status</option>
+                <option value="processing">Processing</option>
+                <option value="shipped">Shipped</option>
+                <option value="delivered">Delivered</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+              <button class="btn btn-danger btn-sm" id="clear-orders-btn"><i class="fas fa-trash"></i> Clear All</button>
+            </div>
+          </div>
+          <div style="overflow-x:auto">
+            <table>
+              <thead><tr><th>Order ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+              <tbody id="orders-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== USERS (Real) ===== -->
+      <div class="page" id="page-users">
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-title">Registered Users <span class="nav-badge" id="users-count">0</span></div>
+            <div class="table-search">
+              <i class="fas fa-search" style="color:var(--text-3);font-size:0.85rem"></i>
+              <input type="text" id="user-search" placeholder="Search users..." />
+            </div>
+          </div>
+          <div style="overflow-x:auto">
+            <table>
+              <thead><tr><th>User</th><th>Email</th><th>Phone</th><th>Registered</th><th>Orders</th><th>Actions</th></tr></thead>
+              <tbody id="users-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== SETTINGS ===== -->
+      <div class="page" id="page-settings">
+        <div class="settings-grid">
+          <div class="settings-card">
+            <div class="settings-card-title">
+              <div class="icon"><i class="fas fa-store" style="color:var(--neon)"></i></div>General Settings
+            </div>
+            <div class="form-group"><label class="form-label">Store Name</label><input type="text" class="form-input" id="s-sitename" /></div>
+            <div class="form-group"><label class="form-label">Tagline</label><input type="text" class="form-input" id="s-tagline" /></div>
+            <div class="form-group"><label class="form-label">Phone Number</label><input type="text" class="form-input" id="s-phone" /></div>
+            <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="s-email" /></div>
+            <div class="form-group"><label class="form-label">Address</label><input type="text" class="form-input" id="s-address" /></div>
+            <button class="btn btn-primary" id="save-general-btn" style="margin-top:8px;width:100%;justify-content:center"><i class="fas fa-save"></i> Save Changes</button>
+          </div>
+
+          <div class="settings-card">
+            <div class="settings-card-title"><div class="icon"><i class="fas fa-truck" style="color:var(--neon)"></i></div>Shipping & Currency</div>
+            <div class="form-group"><label class="form-label">Currency Symbol</label><input type="text" class="form-input" id="s-currency" placeholder="Rs." /></div>
+            <div class="form-group"><label class="form-label">Shipping Fee (Rs.)</label><input type="number" class="form-input" id="s-shipping" /></div>
+            <div class="form-group"><label class="form-label">Free Shipping Min (Rs.)</label><input type="number" class="form-input" id="s-freeship" /></div>
+            <button class="btn btn-primary" onclick="document.getElementById('save-general-btn').click()" style="margin-top:8px;width:100%;justify-content:center"><i class="fas fa-save"></i> Save Changes</button>
+            <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border)">
+              <div class="settings-card-title" style="border:none;padding:0;margin-bottom:16px"><div class="icon"><i class="fas fa-toggle-on" style="color:var(--neon)"></i></div>Feature Toggles</div>
+              <div class="toggle-row"><div class="toggle-info"><span>⚡ Flash Sale Section</span><small>Show/hide on store</small></div><div class="toggle on" id="toggle-flash" data-setting="flashSaleActive"></div></div>
+              <div class="toggle-row"><div class="toggle-info"><span>🤖 AI Chatbot</span><small>NeXa assistant</small></div><div class="toggle on" id="toggle-chat" data-setting="chatbotActive"></div></div>
+              <div class="toggle-row"><div class="toggle-info"><span>🔔 Notifications</span><small>Popup alerts</small></div><div class="toggle on" id="toggle-notif" data-setting="notificationsActive"></div></div>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <div class="settings-card-title"><div class="icon"><i class="fas fa-lock" style="color:var(--neon)"></i></div>Change Admin Password</div>
+            <div class="form-group"><label class="form-label">Current Password</label><input type="password" class="form-input" id="s-current-pass" placeholder="••••••••" /></div>
+            <div class="form-group"><label class="form-label">New Password</label><input type="password" class="form-input" id="s-new-pass" placeholder="Min 6 characters" /></div>
+            <div class="form-group"><label class="form-label">Confirm New Password</label><input type="password" class="form-input" id="s-confirm-pass" placeholder="Repeat new password" /></div>
+            <button class="btn btn-primary" id="change-pass-btn" style="width:100%;justify-content:center"><i class="fas fa-key"></i> Update Password</button>
+          </div>
+
+          <div class="settings-card" style="border-color:rgba(239,68,68,0.15)">
+            <div class="settings-card-title"><div class="icon" style="background:rgba(239,68,68,0.1)"><i class="fas fa-exclamation-triangle" style="color:var(--red)"></i></div><span style="color:var(--red)">Danger Zone</span></div>
+            <p style="font-size:0.82rem;color:var(--text-3);margin-bottom:20px;line-height:1.6">These actions are irreversible. Please proceed with caution.</p>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <button class="btn btn-danger" id="reset-products-btn" style="justify-content:center"><i class="fas fa-undo"></i> Reset Products to Defaults</button>
+              <button class="btn btn-danger" onclick="if(confirm('Clear all data?')){localStorage.clear();sessionStorage.clear();location.reload()}" style="justify-content:center"><i class="fas fa-trash"></i> Clear All Data & Logout</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="product-modal">
+  <div class="modal" style="max-width:700px">
+    <div class="modal-header">
+      <div class="modal-title" id="product-modal-title">Add New Product</div>
+      <div class="modal-close" id="product-modal-close"><i class="fas fa-times"></i></div>
+    </div>
+    <div class="modal-body">
+      <form id="product-form">
+        <div class="form-group" style="margin-bottom:20px">
+          <label class="form-label">Product Icon / Emoji</label>
+          <div class="emoji-picker">
+            <div class="emoji-opt selected" data-emoji="📱">📱</div>
+            <div class="emoji-opt" data-emoji="📲">📲</div>
+            <div class="emoji-opt" data-emoji="🤳">🤳</div>
+            <div class="emoji-opt" data-emoji="📞">📞</div>
+            <div class="emoji-opt" data-emoji="💻">💻</div>
+            <div class="emoji-opt" data-emoji="⌚">⌚</div>
+            <div class="emoji-opt" data-emoji="🎧">🎧</div>
+            <div class="emoji-opt" data-emoji="📷">📷</div>
+            <div class="emoji-opt" data-emoji="🎮">🎮</div>
+            <div class="emoji-opt" data-emoji="🔋">🔋</div>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group form-full"><label class="form-label">Product Name *</label><input type="text" class="form-input" id="pf-name" placeholder="e.g. Samsung Galaxy S25 Ultra" required /></div>
+          <div class="form-group"><label class="form-label">Brand *</label><input type="text" class="form-input" id="pf-brand" placeholder="e.g. Samsung" required /></div>
+          <div class="form-group"><label class="form-label">Category *</label><select class="form-select" id="pf-category" required><option value="flagship">Flagship</option><option value="mid-range">Mid-Range</option><option value="budget">Budget</option><option value="gaming">Gaming</option></select></div>
+          <div class="form-group"><label class="form-label">Current Price (Rs.) *</label><input type="number" class="form-input" id="pf-price" placeholder="189900" required /></div>
+          <div class="form-group"><label class="form-label">Original Price (Rs.)</label><input type="number" class="form-input" id="pf-oldprice" placeholder="214900" /></div>
+          <div class="form-group"><label class="form-label">Discount % (auto-calc)</label><input type="number" class="form-input" id="pf-discount" placeholder="12" min="0" max="99" /></div>
+          <div class="form-group"><label class="form-label">Badge</label><select class="form-select" id="pf-badge"><option value="new">New</option><option value="sale">Sale</option><option value="hot">Hot 🔥</option><option value="sold">Sold Out</option></select></div>
+          <div class="form-group"><label class="form-label">Stock Status</label><select class="form-select" id="pf-stock"><option value="in-stock">In Stock</option><option value="low-stock">Low Stock</option><option value="out-stock">Out of Stock</option></select></div>
+          <div class="form-group"><label class="form-label">EMI (e.g. 15,825/mo)</label><input type="text" class="form-input" id="pf-emi" placeholder="15,825/mo" /></div>
+          <div class="form-group"><label class="form-label">Storage (comma separated)</label><input type="text" class="form-input" id="pf-storage" placeholder="128GB, 256GB, 512GB" /></div>
+          <div class="form-group form-full"><label class="form-label">Description</label><textarea class="form-textarea" id="pf-desc" placeholder="Short product description..."></textarea></div>
+          <div class="form-group"><label class="form-label" style="display:flex;align-items:center;gap:10px;cursor:pointer"><input type="checkbox" id="pf-flash" style="accent-color:var(--neon);width:16px;height:16px" /> ⚡ Flash Sale</label></div>
+          <div class="form-group"><label class="form-label" style="display:flex;align-items:center;gap:10px;cursor:pointer"><input type="checkbox" id="pf-active" checked style="accent-color:var(--neon);width:16px;height:16px" /> ● Make Live</label></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="document.getElementById('product-modal').classList.remove('open')">Cancel</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORY MODAL -->
+<div class="modal-overlay" id="cat-modal">
+  <div class="modal" style="max-width:440px">
+    <div class="modal-header">
+      <div class="modal-title" id="cat-modal-title">Add Category</div>
+      <div class="modal-close" id="cat-modal-close"><i class="fas fa-times"></i></div>
+    </div>
+    <div class="modal-body">
+      <form id="cat-form">
+        <div class="form-group"><label class="form-label">Category Name *</label><input type="text" class="form-input" id="cf-name" placeholder="e.g. Flagship" required /></div>
+        <div class="form-group"><label class="form-label">Icon / Emoji *</label><input type="text" class="form-input" id="cf-icon" placeholder="e.g. 👑" required /></div>
+        <div class="form-group"><label class="form-label">Description</label><input type="text" class="form-input" id="cf-desc" placeholder="Short description" /></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="document.getElementById('cat-modal').classList.remove('open')">Cancel</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>
